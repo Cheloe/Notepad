@@ -2,14 +2,13 @@ const express = require('express');
 const path = require('path');
 const util = require('util');
 const fs = require('fs');
+
 // Promise version of fs.readFile
 const readFromFile = util.promisify(fs.readFile);
 
 // Helper method for generating unique ids
 const uuid = require('./helpers/uuid');
 const { get } = require('http');
-//const 
-//const api = require('server.js')
 
 const PORT = 3001;
 
@@ -18,7 +17,7 @@ const app = express();
 // Middleware for parsing JSON and urlencoded form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//app.use('/api', api);
+
 
 /**
  *  Function to write data to the JSON file given a destination and some content
@@ -37,6 +36,7 @@ app.use(express.urlencoded({ extended: true }));
  *  @param {string} file The path to the file you want to save to.
  *  @returns {void} Nothing
  */
+
  const readAndAppend = (content, file) => {
   fs.readFile(file, 'utf8', (err, data) => {
     if (err) {
@@ -95,15 +95,12 @@ app.post('/api/notes', (req, res) => {
       text,
       id: uuid(),
     };
-
     readAndAppend(newNote, './db/notes.json');
     res.json(`Note added successfully 🚀`);
   } else {
     res.error('Error in adding note');
   }
 });
-
-
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
